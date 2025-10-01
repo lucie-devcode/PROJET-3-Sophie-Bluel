@@ -1,67 +1,168 @@
-async function loadProjets() {
-   const url = "http://localhost:5678/api/works";
-
-   try { //gérer les erreurs
-      const response = await fetch(url);
-      if (!response.ok) {
-         throw new Error(`Erreur ${response.status} : impossible de récupérer les projets`);
-      }
-
-      const projets = await response.json();
-
-      for (let i = 0; i < projets.length; i++) {
-         setFigure(projets[i]);
-      }
-   } catch (error) {
-      console.error(error.message);
-   }
-}
-loadProjets();
-
+// ---------------------------
+// Fonction pour afficher un projet dans la galerie
+// ---------------------------
 function setFigure(projet) {
-   const figure = document.createElement("figure");
-   figure.innerHTML = `
-      <img src="${projet.imageUrl}" alt="${projet.title}">
-      <figcaption>${projet.title}</figcaption>
-   `;
-   document.querySelector(".gallery").append(figure);
+    const figure = document.createElement("figure");
+    figure.innerHTML = `
+        <img src="${projet.imageUrl}" alt="${projet.title}">
+        <figcaption>${projet.title}</figcaption>
+    `;
+    document.querySelector(".gallery").append(figure);
 }
 
+// ---------------------------
+// Fonction pour charger les projets (avec filtrage)
+// ---------------------------
+async function loadProjets(categoryId = "all") {
+    const url = "http://localhost:5678/api/works";
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Erreur ${response.status} : impossible de récupérer les projets`);
+        }
+
+        const projets = await response.json();
+
+        // Vider la galerie avant d'afficher les projets
+        const gallery = document.querySelector(".gallery");
+        gallery.innerHTML = "";
+
+       // Filtrer les projets selon la catégorie
+        const projetsFiltres = projets.filter(projet => 
+            categoryId === "all" || projet.categoryId === categoryId
+        );
+
+        // Afficher les projets filtrés
+        projetsFiltres.forEach(projet => setFigure(projet));
+
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+// ---------------------------
+// Créer les boutons pour chaque catégorie
+// ---------------------------
+function setFilter(category) {
+    const div = document.createElement("div");
+    div.innerHTML = category.name;
+    div.className = "btn-category"; // pour le style si besoin
+
+    div.addEventListener("click", () => {
+        loadProjets(category.id); // filtre la galerie par catégorie
+        setActiveButton(div); // met à jour le style du bouton actif
+    });
+
+    document.querySelector(".categories").append(div);
+}
+
+// ---------------------------
+// Bouton "Tous"
+// ---------------------------
+function createBtnTous() {
+    const tous = document.createElement("div");
+    tous.innerHTML = "Tous";
+    tous.className = "btn-tous active"; // actif par défaut
+
+    tous.addEventListener("click", () => {
+        loadProjets("all");
+        setActiveButton(tous);
+    });
+
+    document.querySelector(".categories").append(tous);
+}
+
+// ---------------------------
+// Mettre en évidence le bouton actif
+// ---------------------------
+function setActiveButton(button) {
+    const buttons = document.querySelectorAll(".categories div");
+    buttons.forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
+}
+
+// ---------------------------
+// Charger les catégories depuis l’API
+// ---------------------------
 async function loadCategories() {
-   const url = "http://localhost:5678/api/categories";
+    const url = "http://localhost:5678/api/categories";
 
-   try { //gérer les erreurs
-      const response = await fetch(url);
-      if (!response.ok) {
-         throw new Error(`Erreur ${response.status} : impossible de récupérer les projets`);
-      }
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Erreur ${response.status} : impossible de récupérer les catégories`);
+        }
 
-      const projets = await response.json();
-      console.log(projets);
+        const categories = await response.json();
 
-      for (let i = 0; i < projets.length; i++) {
-         setFilter(projets[i]);
-      }
-   } catch (error) {
-      console.error(error.message);
-   }
+        // Créer le bouton "Tous" en premier
+        createBtnTous();
+
+        // Créer les boutons pour chaque catégorie
+        for (let i = 0; i < categories.length; i++) {
+            setFilter(categories[i]);
+        }
+
+    } catch (error) {
+        console.error(error.message);
+    }
 }
+
+// ---------------------------
+// Initialisation au chargement de la page
+// ---------------------------
 loadCategories();
+loadProjets(); // affiche tous les projets par défaut
 
 
-const tous = document.createElement("div");
-tous.innerHTML = "Tous";
-tous.className = "btn-tous";
-tous.addEventListener("click", () => {
-    loadProjets("all");
-});
-document.querySelector(".categories").append(tous);
-
-function setFilter(data) {
-   const div = document.createElement("div");
-   div.innerHTML = `${data.name}`;
-   document.querySelector(".categories").append(div);
-}
-
-
-
+//         ┌───────────────┐
+//         │  Page chargée │
+//         └───────┬───────┘
+//                 │
+//                 ▼
+//        ┌─────────────────┐
+//        │ loadCategories()│
+//        └───────┬─────────┘
+//                │
+//    ┌───────────┴───────────┐
+//    │                       │
+//    ▼                       ▼
+// createBtnTous()       setFilter(category) pour chaque catégorie
+//    │                       │
+//    ▼                       ▼
+//  Bouton "Tous"          Boutons par catégorie
+//    │                       │
+//    └─────┐          ┌──────┘
+//          ▼          ▼
+//      Click sur bouton
+//          │
+//          ▼
+//  ┌─────────────────────┐
+//  │ loadProjets(id)     │
+//  │ (filtre la galerie) │
+//  └─────────┬───────────┘
+//            │
+//            ▼
+//  ┌─────────────────────┐
+//  │   Parcours projets  │
+//  │   (API → JSON)      │
+//  └─────────┬───────────┘
+//            │
+//            ▼
+//      setFigure(projet)
+//            │
+//            ▼
+//   ┌─────────────────┐
+//   │ Affiche projet  │
+//   │  <figure>       │
+//   └─────────────────┘
+//            │
+//            ▼
+//       Galerie mise à jour
+//            │
+//            ▼
+//      setActiveButton(btn)
+//            │
+//            ▼
+//  Bouton actif visuellement
