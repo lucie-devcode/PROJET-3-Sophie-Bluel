@@ -3,6 +3,21 @@
    License: none (public domain)
 */
 
+nav a {
+text-decoration: none;
+}
+
+a {
+	color: black;
+}
+a:visited {
+	color: black;
+} 
+
+footer {
+    background: white;
+}
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -23,6 +38,7 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -167,7 +183,7 @@ li:hover {
 
 }
 #contact {
-	width: 50%;
+	width: 33%;
 margin: auto;
 }
 #contact > * {
