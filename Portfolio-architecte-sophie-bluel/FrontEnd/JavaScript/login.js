@@ -1,8 +1,28 @@
 const loginApi = "http://localhost:5678/api/users/login";
-const submitButton = document.querySelector("#submitButton");
 
-document.querySelector("#submitButton").addEventListener("click", () => handleSubmit());
+document.getElementById("loginform").addEventListener("submit", handleSubmit);
 
-function handleSubmit(email, password) {
-    emai
+async function handleSubmit(event) {
+  event.preventDefault();
+
+  let user = {
+    email: document.getElementById('email').value,
+    password: document.getElementById('password').value,
+};
+
+let response = await fetch(loginApi, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(user),
+});
+
+  let result = await response.json();
+  console.log(result);
+  console.log('E-mail:', user.email);
+  console.log('Mot de passe:', user.password);
+
 }
+
+handleSubmit();

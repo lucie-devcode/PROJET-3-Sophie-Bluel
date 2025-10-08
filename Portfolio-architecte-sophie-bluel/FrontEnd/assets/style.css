@@ -16,6 +16,11 @@ a:visited {
 
 footer {
     background: white;
+	padding: 5px;
+}
+
+main {
+	height: 100vh;
 }
 
 html, body, div, span, applet, object, iframe,
@@ -115,6 +120,7 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
 #introduction {
 	display: flex;
 	align-items: center;
@@ -141,6 +147,10 @@ li:hover {
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
+}
+
+.btn-tous {
+  order: -1; /* le met avant tous les autres éléments flex */
 }
 
 .categories {
