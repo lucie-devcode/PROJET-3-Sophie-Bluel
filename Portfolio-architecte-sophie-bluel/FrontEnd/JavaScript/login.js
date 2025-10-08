@@ -17,12 +17,14 @@ let response = await fetch(loginApi, {
   },
   body: JSON.stringify(user),
 });
-
-  let result = await response.json();
-  console.log(result);
-  console.log('E-mail:', user.email);
-  console.log('Mot de passe:', user.password);
-
+  if (response.status != 200) {
+    const errorBox = document.createElement("div");
+    errorBox.className = "message-error";
+    errorBox.innerHTML = "E-mail ou mot de passe incorrect.";
+    document.querySelector("form").prepend(errorBox);
 }
-
-handleSubmit();
+  let result = await response.json();
+  const token = result.token;
+  sessionStorage.setItem("authToken", token);
+  window.location.href = "index.html";
+}

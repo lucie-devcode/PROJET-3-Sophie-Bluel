@@ -241,3 +241,16 @@ footer nav ul {
 	margin: 2em
 }
 
+.message-error {
+	display: flex;
+	align-items: center; 
+	gap: 10px; 
+	border-left: 4px solid red; 
+	background-color: #fff;
+	color: red;
+	padding: 10px 15px;
+	margin-top: 10px;
+	font-size: 0.9rem;
+	border-radius: 4px;
+	width: fit-content; 
+}
