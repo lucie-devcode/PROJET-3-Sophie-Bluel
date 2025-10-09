@@ -22,9 +22,10 @@ let response = await fetch(loginApi, {
     errorBox.className = "message-error";
     errorBox.innerHTML = "E-mail ou mot de passe incorrect.";
     document.querySelector("form").prepend(errorBox);
-}
-  let result = await response.json();
-  const token = result.token;
-  sessionStorage.setItem("authToken", token);
-  window.location.href = "index.html";
+  } else {
+    let result = await response.json();
+    const token = result.token;
+    sessionStorage.setItem("authToken", token);
+    window.location.href = "index.html";
+  }
 }

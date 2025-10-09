@@ -72,3 +72,17 @@ async function init() {
 }
 
 init();
+
+function adminMode() {
+  if (sessionStorage.authToken) {
+    console.log("ok");
+
+    const editBanner = document.createElement("div");
+    editBanner.className = "edit"; 
+    editBanner.innerHTML = `<p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>`;
+
+    document.body.prepend(editBanner);
+  }
+}
+
+adminMode();
