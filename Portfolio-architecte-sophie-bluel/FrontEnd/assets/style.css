@@ -3,20 +3,8 @@
    License: none (public domain)
 */
 
-nav a {
-text-decoration: none;
-}
-
-a {
-	color: black;
-}
-a:visited {
-	color: black;
-} 
-
-footer {
-    background: white;
-	padding: 5px;
+* {
+	box-sizing: border-box;
 }
 
 main {
@@ -111,8 +99,19 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
 }
+
+nav a {
+text-decoration: none;
+}
+
+a {
+	color: black;
+}
+a:visited {
+	color: black;
+} 
+
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
@@ -226,6 +225,7 @@ margin: auto;
 }
 
 input[type="submit"]{
+	cursor: pointer;
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -234,6 +234,11 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+}
+
+footer {
+    background: white;
+	padding: 5px;
 }
 
 footer nav ul {
@@ -267,4 +272,56 @@ footer nav ul {
 	position: absolute;
 	left: 0;
 	top: 0;
+}
+
+.edit a {
+	color: white;
+}
+
+.edit a:visited {
+	color: white;
+}
+
+*:focus {
+	box-shadow: 0 0 10px blue;
+}
+
+.modal {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.08);
+	animation: fadeIn .3s both;
+}
+
+.modal-wrapper {
+	overflow: auto;
+	width: 600px;
+	max-width: calc(100vh - 20px);
+	max-height: calc(100vh - 20px);
+	background-color: white;
+	animation: slideFromTop .3s both .1s;
+}
+
+.modal[arial-hidden="true"] {
+	animation-name: fadeOut;
+}
+
+.modal[arial-hidden="true"] .modal-wrapper {
+	animation-name: slideBottom;
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes slideFromTop {
+	from { transform: translateY(-50px); }
+	to { transform: translateY(0); }
 }

@@ -1,116 +1,153 @@
-// // ---------------------------
-// // Fonction pour afficher un projet dans la galerie
-// // ---------------------------
-// function setFigure(projet) {
-//     const figure = document.createElement("figure");
-//     figure.innerHTML = `
-//         <img src="${projet.imageUrl}" alt="${projet.title}">
-//         <figcaption>${projet.title}</figcaption>
-//     `;
-//     document.querySelector(".gallery").append(figure);
-// }
+async function loadProjets(filter) {
+    document.querySelector(".gallery").innerHTML = "";
+    const url = "http://localhost:5678/api/works";
 
-// // ---------------------------
-// // Fonction pour charger les projets (avec filtrage)
-// // ---------------------------
-// async function loadProjets(categoryId = "all") {
-//     const url = "http://localhost:5678/api/works";
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Erreur ${response.status} : impossible de récupérer les projets`);
+        }
 
-//     try {
-//         const response = await fetch(url);
-//         if (!response.ok) {
-//             throw new Error(`Erreur ${response.status} : impossible de récupérer les projets`);
-//         }
+        const projets = await response.json();
 
-//         const projets = await response.json();
+        const projetsFiltres =
+            filter && filter !== "all"
+                ? projets.filter((projet) => projet.categoryId === Number(filter))
+                : projets; 
 
-//         // Vider la galerie avant d'afficher les projets
-//         const gallery = document.querySelector(".gallery");
-//         gallery.innerHTML = "";
+        for (let i = 0; i < projetsFiltres.length; i++) {
+            setFigure(projetsFiltres[i]);
+        }
 
-//        // Filtrer les projets selon la catégorie
-//         const projetsFiltres = projets.filter(projet => 
-//             categoryId === "all" || projet.categoryId === categoryId
-//         );
+    } catch (error) {
+        console.error(error.message);
+    }
+}
 
-//         // Afficher les projets filtrés
-//         projetsFiltres.forEach(projet => setFigure(projet));
+function setFigure(projet) {
+    const figure = document.createElement("figure");
+    figure.innerHTML = `
+        <img src="${projet.imageUrl}" alt="${projet.title}">
+        <figcaption>${projet.title}</figcaption>
+    `;
+    document.querySelector(".gallery").append(figure);
+}
 
-//     } catch (error) {
-//         console.error(error.message);
-//     }
-// }
+async function loadCategories() {
+    const url = "http://localhost:5678/api/categories";
 
-// // ---------------------------
-// // Créer les boutons pour chaque catégorie
-// // ---------------------------
-// function setFilter(category) {
-//     const div = document.createElement("div");
-//     div.innerHTML = category.name;
-//     div.className = "btn-category"; // pour le style si besoin
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Erreur ${response.status} : impossible de récupérer les catégories`);
+        }
 
-//     div.addEventListener("click", () => {
-//         loadProjets(category.id); // filtre la galerie par catégorie
-//         setActiveButton(div); // met à jour le style du bouton actif
-//     });
+        const categories = await response.json();
+        for (let i = 0; i < categories.length; i++) {
+            setFilter(categories[i]);
+        }
+    } catch (error) {
+        console.error(error.message);
+    }
+}
 
-//     document.querySelector(".categories").append(div);
-// }
+function setFilter(category) {
+    const div = document.createElement("div");
+    div.textContent = category.name;
+    div.className = "btn-category";
+    div.addEventListener("click", () => loadProjets(category.id));
+    document.querySelector(".categories").append(div);
+}
 
-// // ---------------------------
-// // Bouton "Tous"
-// // ---------------------------
-// function createBtnTous() {
-//     const tous = document.createElement("div");
-//     tous.innerHTML = "Tous";
-//     tous.className = "btn-tous active"; // actif par défaut
+async function init() {
+    await loadCategories();
 
-//     tous.addEventListener("click", () => {
-//         loadProjets("all");
-//         setActiveButton(tous);
-//     });
+    const tous = document.createElement("div");
+    tous.textContent = "Tous";
+    tous.className = "btn-tous";
+    tous.addEventListener("click", () => loadProjets("all"));
+    document.querySelector(".categories").append(tous);
 
-//     document.querySelector(".categories").append(tous);
-// }
+    loadProjets();
+}
 
-// // ---------------------------
-// // Mettre en évidence le bouton actif
-// // ---------------------------
-// function setActiveButton(button) {
-//     const buttons = document.querySelectorAll(".categories div");
-//     buttons.forEach(btn => btn.classList.remove("active"));
-//     button.classList.add("active");
-// }
+init();
+adminMode();
 
-// // ---------------------------
-// // Charger les catégories depuis l’API
-// // ---------------------------
-// async function loadCategories() {
-//     const url = "http://localhost:5678/api/categories";
+function adminMode() {
+  if (localStorage.authToken) {
 
-//     try {
-//         const response = await fetch(url);
-//         if (!response.ok) {
-//             throw new Error(`Erreur ${response.status} : impossible de récupérer les catégories`);
-//         }
+    const editBanner = document.createElement("div");
+    editBanner.className = "edit"; 
+    editBanner.innerHTML = `<p><a href="#modal1" class="js-modal"><i class="fa-regular fa-pen-to-square"></i> Mode édition</a></p>`;
 
-//         const categories = await response.json();
+      document.body.prepend(editBanner);
+      document.querySelector(".categories").style.display = "none"
+  }
+}
 
-//         // Créer le bouton "Tous" en premier
-//         createBtnTous();
+let modal = null
+const focusableSelector = 'button, a, input, textarea'
+let focusables = []
+let previouslyFocusedElement = null
 
-//         // Créer les boutons pour chaque catégorie
-//         for (let i = 0; i < categories.length; i++) {
-//             setFilter(categories[i]);
-//         }
+const openModal = function (e) {
+    e.preventDefault()
+    modal = document.querySelector(e.currentTarget.getAttribute("href"))
+    focusables = Array.from(modal.querySelectorAll(focusableSelector))
+    previouslyFocusedElement = document.querySelector(':focus')
+    focusables[0].focus()
+    modal.style.display = null
+    modal.removeAttribute("aria-hidden");
+    modal.setAttribute("aria-modal", "true");
+    modal.addEventListener('click', closeModal)
+    modal.querySelector('.js-modal-close').addEventListener('click', closeModal)
+    modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation)
+};
 
-//     } catch (error) {
-//         console.error(error.message);
-//     }
-// }
+const closeModal = function (e) {
+    if (modal === null) return
+    if (previouslyFocusedElement !== null) previouslyFocusedElement.focus()
+    e.preventDefault();
+    modal.style.display = 'none';
+    modal.setAttribute("aria-hidden", 'true');
+    modal.removeAttribute("aria-modal");
+    modal.removeEventListener('click', closeModal);
+    modal.querySelector('.js-modal-close').removeEventListener('click', closeModal)
+    modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation)
+    modal = null
+};
 
-// // ---------------------------
-// // Initialisation au chargement de la page
-// // ---------------------------
-// loadCategories();
-// loadProjets(); // affiche tous les projets par défaut
+const stopPropagation = function (e) {
+    e.stopPropagation();
+}
+
+const focusInModal = function (e) {
+    e.preventDefault();
+    let index = focusables.findIndex(f => f === modal.querySelector(':focus'));
+    if (e.shiftKey === true) {
+        index--
+    } else {
+        index++
+    }
+    if (index >= focusables.length) {
+        index = 0
+    }
+    if (index < 0) {
+        index = focusables.length - 1
+    }
+    focusables[index].focus()
+}
+
+document.querySelectorAll(".js-modal").forEach((a) => {
+    a.addEventListener("click", openModal);
+});
+
+window.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+        closeModal(e);
+    }
+    if (e.key === 'Tab' && modal !== null) {
+        focusInModal(e);
+    }
+})

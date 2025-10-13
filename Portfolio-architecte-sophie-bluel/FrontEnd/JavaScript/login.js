@@ -25,7 +25,7 @@ let response = await fetch(loginApi, {
   } else {
     let result = await response.json();
     const token = result.token;
-    sessionStorage.setItem("authToken", token);
+    localStorage.setItem("authToken", token);
     window.location.href = "index.html";
   }
 }
