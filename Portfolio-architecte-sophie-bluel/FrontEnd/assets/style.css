@@ -282,7 +282,7 @@ footer nav ul {
 	color: white;
 }
 
-*:focus {
+.modal :focus {
 	box-shadow: 0 0 10px blue;
 }
 
@@ -302,18 +302,28 @@ footer nav ul {
 .modal-wrapper {
 	overflow: auto;
 	width: 600px;
-	max-width: calc(100vh - 20px);
-	max-height: calc(100vh - 20px);
+	max-width: calc(100vw - 20px);
+	max-height: calc(100vw - 20px);
 	background-color: white;
 	animation: slideFromTop .3s both .1s;
+	padding: 20px;
 }
 
-.modal[arial-hidden="true"] {
+.modal[aria-hidden="true"] {
 	animation-name: fadeOut;
 }
 
-.modal[arial-hidden="true"] .modal-wrapper {
+.modal[aria-hidden="true"] .modal-wrapper {
 	animation-name: slideBottom;
+}
+
+.titlemodal {
+	text-align: center;
+	display: block;
+	font-family: 'Work Sans';
+	font-size: 18px;
+	font-weight: normal;
+	margin: 20px;
 }
 
 @keyframes fadeIn {
@@ -324,4 +334,47 @@ footer nav ul {
 @keyframes slideFromTop {
 	from { transform: translateY(-50px); }
 	to { transform: translateY(0); }
+}
+
+.gallery-modal {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 15px;
+	margin-top: 20px;
+}
+
+.modal-figure img {
+	width: 100%;
+	display: block;
+	border-radius: 5px;
+}
+
+.modal-figure {
+	position: relative;
+}
+
+.delete-btn {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	background: rgba(255,255,255,0.8);
+	border: none;
+	cursor: pointer;
+	border-radius: 50%;
+	padding: 5px;
+}
+
+#add-photo-btn {
+	margin-top: 20px;
+	background-color: #B1663C;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 30px;
+	cursor: pointer;
+	font-family: 'Syne';
+	font-weight: 700;
+}
+#add-photo-btn:hover {
+	background-color: #1D6154;
 }
