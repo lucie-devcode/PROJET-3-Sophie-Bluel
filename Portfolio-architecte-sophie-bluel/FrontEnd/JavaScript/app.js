@@ -84,17 +84,20 @@ function adminMode() {
 
 // ------------------- Modale -------------------
 const openModal = function (e) {
-    e.preventDefault();
-    modal = document.querySelector(e.currentTarget.getAttribute("href"));
-    focusables = Array.from(modal.querySelectorAll(focusableSelector));
-    previouslyFocusedElement = document.querySelector(':focus');
-    focusables[0].focus();
-    modal.style.display = null;
-    modal.removeAttribute("aria-hidden");
-    modal.setAttribute("aria-modal", "true");
-    modal.addEventListener('click', closeModal);
-    modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
-    modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
+  e.preventDefault();
+  modal = document.querySelector(e.currentTarget.getAttribute("href"));
+  modal.style.display = null;
+  modal.removeAttribute("aria-hidden");
+  modal.setAttribute("aria-modal", "true");
+
+  loadModalGallery();
+
+  focusables = Array.from(modal.querySelectorAll(focusableSelector));
+  previouslyFocusedElement = document.querySelector(':focus');
+  focusables[0].focus();
+  modal.addEventListener('click', closeModal);
+  modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
+  modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
 };
 
 const closeModal = function (e) {
@@ -141,11 +144,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // --- GESTION DE LA GALERIE DANS LA MODALE ---
-
-const modalGallery = document.querySelector(".gallery-modal");
-
-// Fonction qui charge les projets dans la modale
 async function loadModalGallery() {
+  // Sélection à l'intérieur de la fonction, après que le DOM est prêt
+  const modalGallery = document.querySelector(".gallery-modal");
+  if (!modalGallery) {
+    console.error("gallery-modal introuvable !");
+    return;
+  }
   modalGallery.innerHTML = ""; 
 
   try {
@@ -158,53 +163,37 @@ async function loadModalGallery() {
       const figure = document.createElement("figure");
       figure.classList.add("modal-figure");
 
+      // Image + icône poubelle en overlay
       figure.innerHTML = `
-        <img src="${projet.imageUrl}" alt="${projet.title}">
-        <button class="delete-btn" data-id="${projet.id}">
-          <i class="fa-solid fa-trash-can"></i>
-        </button>
+        <div class="image-container">
+          <img src="${projet.imageUrl}" alt="${projet.title}">
+          <i class="fa-solid fa-trash-can overlay-icon delete-btn" data-id="${projet.id}"></i>
+        </div>
+        <figcaption>${projet.title}</figcaption>
       `;
 
       modalGallery.appendChild(figure);
     });
 
-    // Boutons supprimer
-    document.querySelectorAll(".delete-btn").forEach((btn) => {
+    // Ajout des écouteurs sur les icônes de suppression
+    modalGallery.querySelectorAll(".delete-btn").forEach((btn) => {
       btn.addEventListener("click", async (e) => {
         const id = e.currentTarget.dataset.id;
-        await deleteProject(id);
-        loadModalGallery(); // recharge la galerie après suppression
+        const confirmed = confirm("Supprimer ce projet ?");
+        if (!confirmed) return;
+
+        const success = await deleteProject(id);
+        if (success) {
+          await loadModalGallery(); // recharge la galerie dans la modale
+          loadProjets("all");       // recharge la galerie principale
+        }
       });
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("Erreur dans loadModalGallery :", error);
   }
 }
 
-// Fonction suppression
-async function deleteProject(id) {
-    const token = localStorage.getItem("authToken"); // ton token de connexion
-    if (!token) {
-        alert("Vous devez être connecté pour supprimer un projet.");
-        return;
-    }
 
-
-  try {
-    const response = await fetch(`http://localhost:5678/api/works/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Erreur de suppression");
-    }
-    console.log(`Projet ${id} supprimé`);
-  } catch (error) {
-    console.error(error);
-  }
-}
 

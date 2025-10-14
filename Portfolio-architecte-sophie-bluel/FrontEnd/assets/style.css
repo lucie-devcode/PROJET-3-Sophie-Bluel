@@ -1,14 +1,10 @@
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
+/* =========================================================
+   RESET CSS (Eric Meyer)
+   Source : http://meyerweb.com/eric/tools/css/reset/
+   Version : 2.0 | 20110126
+   ========================================================= */
 * {
 	box-sizing: border-box;
-}
-
-main {
-	height: 100vh;
 }
 
 html, body, div, span, applet, object, iframe,
@@ -32,69 +28,86 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
-/* HTML5 display-role reset for older browsers */
+/* HTML5 display-role reset pour anciens navigateurs */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 	background-color: #FFFEF8;
 }
+
 ol, ul {
 	list-style: none;
 }
+
 blockquote, q {
 	quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
 }
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-/** end reset css**/
+
+/* =========================================================
+   STYLES GÉNÉRAUX
+   ========================================================= */
 body {
 	max-width: 1140px;
-	margin:auto;
-	font-family: 'Work Sans' ;
+	margin: auto;
+	font-family: 'Work Sans';
 	font-size: 14px;
 	margin-top: 70px;
 }
+
+main {
+	height: 100vh;
+}
+
+section {
+	margin: 50px 0;
+}
+
+/* =========================================================
+   HEADER & NAVIGATION
+   ========================================================= */
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
-}
-section {
-	margin: 50px 0
+	margin: 50px 0;
 }
 
-h1{
+h1 {
 	display: flex;
 	flex-direction: column;
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
 }
 
 h1 > span {
 	font-family: 'Work Sans';
-	font-size:10px;
+	font-size: 10px;
 	letter-spacing: 0.1em;
-;
 }
 
-h2{
+h2 {
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
 }
+
 nav ul {
 	display: flex;
 	align-items: center;
@@ -102,15 +115,16 @@ nav ul {
 }
 
 nav a {
-text-decoration: none;
+	text-decoration: none;
 }
 
 a {
 	color: black;
 }
+
 a:visited {
 	color: black;
-} 
+}
 
 nav li {
 	padding: 0 10px;
@@ -121,13 +135,18 @@ li:hover {
 	color: #B1663C;
 }
 
+/* =========================================================
+   SECTION INTRODUCTION
+   ========================================================= */
 #introduction {
 	display: flex;
 	align-items: center;
 }
+
 #introduction figure {
-	flex: 1
+	flex: 1;
 }
+
 #introduction img {
 	display: block;
 	margin: auto;
@@ -135,8 +154,9 @@ li:hover {
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
 }
+
 #introduction h2 {
 	margin-bottom: 1em;
 }
@@ -144,13 +164,13 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
+/* =========================================================
+   PORTFOLIO & GALERIE
+   ========================================================= */
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
-}
-
-.btn-tous {
-  order: -1; /* le met avant tous les autres éléments flex */
 }
 
 .categories {
@@ -159,6 +179,10 @@ li:hover {
 	display: flex;
 	justify-content: space-evenly;
 	margin: 35px auto;
+}
+
+.btn-tous {
+	order: -1; /* placer avant les autres filtres */
 }
 
 .categories > * {
@@ -176,8 +200,8 @@ li:hover {
 }
 
 .categories div.active {
-    background-color: #1D6154;
-    color: white;
+	background-color: #1D6154;
+	color: white;
 }
 
 .gallery {
@@ -190,22 +214,27 @@ li:hover {
 
 .gallery img {
 	width: 100%;
-
 }
+
+/* =========================================================
+   FORMULAIRE DE CONTACT
+   ========================================================= */
 #contact {
 	width: 33%;
-margin: auto;
+	margin: auto;
 }
+
 #contact > * {
 	text-align: center;
-
 }
-#contact h2{
+
+#contact h2 {
 	margin-bottom: 20px;
 }
+
 #contact form {
 	text-align: left;
-	margin-top:30px;
+	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
 }
@@ -216,51 +245,62 @@ margin: auto;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
 #contact label {
 	margin: 2em 0 1em 0;
 }
+
 #contact textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"]{
+input[type="submit"] {
 	cursor: pointer;
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
-	margin : 2em auto ;
+	margin: 2em auto;
 	width: 180px;
 	text-align: center;
-	border-radius: 60px ;
+	border-radius: 60px;
 }
 
+/* =========================================================
+   FOOTER
+   ========================================================= */
 footer {
-    background: white;
+	background: white;
 	padding: 5px;
 }
 
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 
+/* =========================================================
+   MESSAGES D’ERREUR
+   ========================================================= */
 .message-error {
 	display: flex;
-	align-items: center; 
-	gap: 10px; 
-	border-left: 4px solid red; 
+	align-items: center;
+	gap: 10px;
+	border-left: 4px solid red;
 	background-color: #fff;
 	color: red;
 	padding: 10px 15px;
 	margin-top: 10px;
 	font-size: 0.9rem;
 	border-radius: 4px;
-	width: fit-content; 
+	width: fit-content;
 }
 
+/* =========================================================
+   MODE ÉDITION (ADMIN)
+   ========================================================= */
 .edit {
 	background-color: black;
 	color: white;
@@ -274,18 +314,14 @@ footer nav ul {
 	top: 0;
 }
 
-.edit a {
-	color: white;
-}
-
+.edit a,
 .edit a:visited {
 	color: white;
 }
 
-.modal :focus {
-	box-shadow: 0 0 10px blue;
-}
-
+/* =========================================================
+   MODALE (FENÊTRE POPUP)
+   ========================================================= */
 .modal {
 	position: fixed;
 	display: flex;
@@ -317,53 +353,101 @@ footer nav ul {
 	animation-name: slideBottom;
 }
 
-.titlemodal {
+.modal :focus {
+	box-shadow: 0 0 10px blue;
+}
+
+/* ---- MODALE : contenu ---- */
+.close-button-container {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.js-modal-close {
+	border: none;
+	background-color: white;
+	font-size: 18px;
+}
+
+.modal-wrapper h3 {
+	font-size: 18px;
 	text-align: center;
 	display: block;
-	font-family: 'Work Sans';
-	font-size: 18px;
-	font-weight: normal;
-	margin: 20px;
+	margin-bottom: 40px;
 }
 
-@keyframes fadeIn {
-	from { opacity: 0; }
-	to { opacity: 1; }
+.modal-wrapper hr {
+	margin-top: 30px;
 }
 
-@keyframes slideFromTop {
-	from { transform: translateY(-50px); }
-	to { transform: translateY(0); }
+.modal-button-container {
+	display: flex;
+	justify-content: center;
 }
+
+.add-photo-button {
+	padding: 10px 20px;
+	margin-top: 10px;
+	border: 1px solid #1D6154;
+	border-radius: 25px;
+	font-family: 'Syne';
+	color: white;
+	cursor: pointer;
+	background-color: #1D6154;
+	width: 250px;
+}
+
+/* ---- MODALE : galerie ---- */
 
 .gallery-modal {
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	gap: 15px;
-	margin-top: 20px;
-}
-
-.modal-figure img {
 	width: 100%;
-	display: block;
-	border-radius: 5px;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 20px;
+	grid-row-gap: 20px;
 }
 
 .modal-figure {
 	position: relative;
 }
 
+.modal-figure img {
+	width: 100%;
+	display: block;
+}
+
 .delete-btn {
 	position: absolute;
 	top: 5px;
 	right: 5px;
-	background: rgba(255,255,255,0.8);
+	background: rgba(255, 255, 255, 0.8);
 	border: none;
 	cursor: pointer;
 	border-radius: 50%;
 	padding: 5px;
 }
+.image-container {
+  position: relative;
+  display: inline-block;
+}
 
+.image-container img {
+  display: block;
+}
+
+.image-container .overlay-icon {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  padding: 4px;
+  border-radius: 10%;
+}
+
+/* ---- MODALE : bouton ajouter ---- */
 #add-photo-btn {
 	margin-top: 20px;
 	background-color: #B1663C;
@@ -375,6 +459,18 @@ footer nav ul {
 	font-family: 'Syne';
 	font-weight: 700;
 }
+
 #add-photo-btn:hover {
 	background-color: #1D6154;
+}
+
+/* ---- MODALE : animations ---- */
+@keyframes fadeIn {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes slideFromTop {
+	from { transform: translateY(-50px); }
+	to { transform: translateY(0); }
 }

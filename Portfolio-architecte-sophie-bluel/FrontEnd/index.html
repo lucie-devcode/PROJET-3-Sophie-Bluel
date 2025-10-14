@@ -17,18 +17,20 @@
 	<!-- ---------------- MODALE ---------------- -->
 	<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal" style="display:none">
 		<div class="modal-wrapper js-modal-stop">
-			<h3 id="titlemodal">Galerie photo</h3>
-			<button class="js-modal-close">X</button>
+			<div class="close-button-container">
+          		<button class="js-modal-close">
+            		<i class="fa-solid fa-xmark"></i>
+          		</button>
+        	</div>
+        	<h3>Galerie Photo</h3>
+        	<div class="gallery-modal"></div>
+			<hr />
+        	<div class="modal-button-container">
+          		<button class="add-photo-button">Ajouter une photo</button>
+        	</div>
+        </div>
+    </aside>
 
-			<!-- Galerie des photos -->
-			<div class="modal-gallery-view">
-				<div class="gallery-modal"></div>
-				<div class="modal-buttons">
-					<button id="add-photo-btn">Ajouter une photo</button>
-				</div>
-			</div>
-		</div>
-	</aside>
 
 	<!-- ---------------- HEADER ---------------- -->
 	<header>
