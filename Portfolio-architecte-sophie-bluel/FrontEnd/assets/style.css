@@ -343,6 +343,7 @@ footer nav ul {
 	background-color: white;
 	animation: slideFromTop .3s both .1s;
 	padding: 20px;
+	border-radius: 10px;
 }
 
 .modal[aria-hidden="true"] {
@@ -370,7 +371,7 @@ footer nav ul {
 }
 
 .modal-wrapper h3 {
-	font-size: 18px;
+	font-size: 24px;
 	text-align: center;
 	display: block;
 	margin-bottom: 40px;
@@ -400,11 +401,10 @@ footer nav ul {
 /* ---- MODALE : galerie ---- */
 
 .gallery-modal {
-	width: 100%;
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-	grid-column-gap: 20px;
-	grid-row-gap: 20px;
+     display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    padding: 40px;
 }
 
 .modal-figure {
@@ -412,8 +412,9 @@ footer nav ul {
 }
 
 .modal-figure img {
-	width: 100%;
-	display: block;
+	width: 85px;
+	height: 120px;
+
 }
 
 .delete-btn {

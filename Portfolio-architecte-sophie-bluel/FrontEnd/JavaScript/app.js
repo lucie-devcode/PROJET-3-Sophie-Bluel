@@ -171,6 +171,34 @@ async function loadModalGallery() {
 
       modalGallery.appendChild(figure);
     });
+  
+  // --- Fonction pour supprimer un projet sur le serveur ---
+async function deleteProject(id) {
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    alert("Vous devez être connecté pour supprimer un projet.");
+    return false;
+  }
+
+  try {
+    const res = await fetch(`http://localhost:5678/api/works/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    if (!res.ok) {
+      alert("Erreur lors de la suppression du projet.");
+      return false;
+    }
+
+    return true; // Suppression réussie
+  } catch (error) {
+    console.error("Erreur réseau :", error);
+    return false;
+  }
+}
 
   // Ajout des écouteurs sur les icônes de suppression
   modalGallery.querySelectorAll(".delete-btn").forEach((btn) => {
@@ -181,7 +209,7 @@ async function loadModalGallery() {
 
       const success = await deleteProject(id);
       if (success) {
-        // Supprimer le projet de allProjets pour ne pas refaire un fetch
+      // ② Supprime le projet du tableau local
         allProjets = allProjets.filter(projet => projet.id !== Number(id));
 
         // Recharge la galerie dans la modale et la galerie principale
