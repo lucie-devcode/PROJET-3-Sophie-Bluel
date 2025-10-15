@@ -151,13 +151,10 @@ async function loadModalGallery() {
     console.error("gallery-modal introuvable !");
     return;
   }
+  
   modalGallery.innerHTML = ""; 
 
-  try {
-    const response = await fetch("http://localhost:5678/api/works");
-    if (!response.ok) throw new Error("Erreur de chargement des projets");
-
-    const projets = await response.json();
+   const projets = allProjets;
 
     projets.forEach((projet) => {
       const figure = document.createElement("figure");
@@ -175,25 +172,26 @@ async function loadModalGallery() {
       modalGallery.appendChild(figure);
     });
 
-    // Ajout des écouteurs sur les icônes de suppression
-    modalGallery.querySelectorAll(".delete-btn").forEach((btn) => {
-      btn.addEventListener("click", async (e) => {
-        const id = e.currentTarget.dataset.id;
-        const confirmed = confirm("Supprimer ce projet ?");
-        if (!confirmed) return;
+  // Ajout des écouteurs sur les icônes de suppression
+  modalGallery.querySelectorAll(".delete-btn").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      const id = e.currentTarget.dataset.id;
+      const confirmed = confirm("Supprimer ce projet ?");
+      if (!confirmed) return;
 
-        const success = await deleteProject(id);
-        if (success) {
-          await loadModalGallery(); // recharge la galerie dans la modale
-          loadProjets("all");       // recharge la galerie principale
-        }
-      });
+      const success = await deleteProject(id);
+      if (success) {
+        // Supprimer le projet de allProjets pour ne pas refaire un fetch
+        allProjets = allProjets.filter(projet => projet.id !== Number(id));
+
+        // Recharge la galerie dans la modale et la galerie principale
+        loadModalGallery();
+        loadProjets("all");
+      }
     });
-
-  } catch (error) {
-    console.error("Erreur dans loadModalGallery :", error);
-  }
+  });
 }
 
+  
 
 
