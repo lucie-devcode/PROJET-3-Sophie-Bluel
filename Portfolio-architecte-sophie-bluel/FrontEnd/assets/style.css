@@ -217,40 +217,40 @@ li:hover {
 }
 
 /* =========================================================
-   FORMULAIRE DE CONTACT
+   FORMULAIRES
    ========================================================= */
-#contact {
-	width: 33%;
+.form {
+	width: 65%;
 	margin: auto;
 }
 
-#contact > * {
+.form > * {
 	text-align: center;
 }
 
-#contact h2 {
+.form h2 {
 	margin-bottom: 20px;
 }
 
-#contact form {
+.form form {
 	text-align: left;
 	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input {
+.form input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-#contact label {
+.form label {
 	margin: 2em 0 1em 0;
 }
 
-#contact textarea {
+.form textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
@@ -265,6 +265,10 @@ input[type="submit"] {
 	width: 180px;
 	text-align: center;
 	border-radius: 60px;
+}
+
+.add-photo-form {
+	width: 70%;
 }
 
 /* =========================================================
@@ -364,7 +368,18 @@ footer nav ul {
 	justify-content: flex-end;
 }
 
+.modal-buttons-container {
+	display: flex;
+	justify-content: space-between;
+}
+
 .js-modal-close {
+	border: none;
+	background-color: white;
+	font-size: 18px;
+}
+
+.js-modal-back {
 	border: none;
 	background-color: white;
 	font-size: 18px;
@@ -379,6 +394,7 @@ footer nav ul {
 
 .modal-wrapper hr {
 	margin-top: 30px;
+	width: 100%;
 }
 
 .modal-button-container {
