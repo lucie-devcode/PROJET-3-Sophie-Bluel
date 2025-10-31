@@ -87,6 +87,22 @@ function adminMode() {
 }
 
 // ------------------- Modale -------------------
+function showAddPhoto() {
+    const galleryView = modal.querySelector(".modal-gallery-view");
+    const addView = modal.querySelector(".modal-add");
+    if (!galleryView || !addView) return;
+    galleryView.style.display = "none";
+    addView.style.display = "block";
+}
+
+function showGallery() {
+    const galleryView = modal.querySelector(".modal-gallery-view");
+    const addView = modal.querySelector(".modal-add");
+    if (!galleryView || !addView) return;
+    galleryView.style.display = "block";
+    addView.style.display = "none";
+}
+
 const openModal = function (e) {
   e.preventDefault();
   modal = document.querySelector(e.currentTarget.getAttribute("href"));
@@ -95,6 +111,14 @@ const openModal = function (e) {
   modal.style.display = null;
   modal.removeAttribute("aria-hidden");
   modal.setAttribute("aria-modal", "true");
+
+   // Afficher la galerie, cacher ajout photo
+  const galleryView = modal.querySelector(".modal-gallery-view");
+  const addView = modal.querySelector(".modal-add");
+  if (galleryView && addView) {
+      galleryView.style.display = "block";
+      addView.style.display = "none";
+  }
 
   loadModalGallery();
 
@@ -106,12 +130,28 @@ const openModal = function (e) {
   modal.querySelectorAll('.js-modal-close').forEach(btn =>
     btn.addEventListener('click', closeModal));
   modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
+
+  // --- GESTION SWITCH MODAL ---
+  const addPhotoBtn = modal.querySelector(".add-photo-button");
+  if (addPhotoBtn) addPhotoBtn.addEventListener("click", showAddPhoto);
+
+  const backBtn = modal.querySelector(".js-modal-back");
+  if (backBtn) backBtn.addEventListener("click", showGallery);
 };
 
 const closeModal = function (e) {
     if (!modal) return;
     if (previouslyFocusedElement) previouslyFocusedElement.focus();
     e.preventDefault();
+
+    // --- Reset vues pour la prochaine ouverture ---
+    const galleryView = modal.querySelector(".modal-gallery-view");
+    const addView = modal.querySelector(".modal-add");
+    if (galleryView && addView) {
+        galleryView.style.display = "block";
+        addView.style.display = "none";
+    }
+
     modal.style.display = 'none';
     modal.setAttribute("aria-hidden", 'true');
     modal.removeAttribute("aria-modal");
@@ -239,39 +279,3 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (e.key === 'Tab' && modal !== null) focusInModal(e);
     });
 });
-
-
-// Modal switch
-// const switchModal = function () {
-//   console.log("clicked");
-//   document.querySelector(
-//     ".modal-wrapper"
-//   ).innerHTML = `<div class="modal-buttons-container">
-//           <button class="v">
-//             <i class="fa-solid fa-arrow-left"></i>
-//           </button>
-//           <button class="js-modal-close">
-//             <i class="fa-solid fa-xmark"></i>
-//           </button>
-//         </div>
-//         <h3>Ajout photo</h3>
-//       <div class="form add-photo-form">
-//         <form action="#" method="post">
-//           <label for="title">Titre</label>
-//           <input type="text" name="title" id="title" />
-//           <label for="category">Catégorie</label>
-//           <input type="category" name="category" id="category" />
-//           <hr />
-//           <input type="submit" value="Valider" />
-//         </form>
-//         </div>
-//         `;
-//   modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
-//   modal.querySelector(".js-modal-back").addEventListener("click", openModal);
-// };
-
-// const backButton = document.querySelector(".fa-arrow-left");
-
-// const addPhotoButton = document.querySelector(".add-photo-button");
-// console.log(addPhotoButton);
-// addPhotoButton.addEventListener("click", switchModal);
