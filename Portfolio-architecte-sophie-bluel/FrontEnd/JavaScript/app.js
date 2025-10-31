@@ -96,8 +96,9 @@ const openModal = function (e) {
   previouslyFocusedElement = document.querySelector(':focus');
   focusables[0].focus();
   modal.addEventListener('click', closeModal);
-  modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
-  modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
+  modal.querySelectorAll('.js-modal-close').forEach(btn =>
+  btn.addEventListener('click', closeModal)
+);  modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
 };
 
 const closeModal = function (e) {
@@ -146,9 +147,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 // --- GESTION DE LA GALERIE DANS LA MODALE ---
 async function loadModalGallery() {
   // Sélection à l'intérieur de la fonction, après que le DOM est prêt
-  const modalGallery = document.querySelector(".gallery-modal");
+  const modalGallery = document.querySelector(".modal-gallery-items");
   if (!modalGallery) {
-    console.error("gallery-modal introuvable !");
+    console.error("modal-gallery-items introuvable !");
     return;
   }
   
@@ -220,33 +221,37 @@ async function deleteProject(id) {
   });
 }
 
-const AddPhotoModal = function () {
-  document.querySelector(".modal-wrapper").innerHTML =
-    `<div class="modal-buttons-container">
-      <button class="js-modal-back">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-      <button class="js-modal-close">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </div>
-    <h3>Ajout photo</h3>
-    <div class="form add-photo-form">
-      <form action="#" method="post">
-        <label for="title">Titre</label>
-        <input type="text" name="title" id="title">
-        <label for="category">Catégorie</label>
-        <input type="category" name="category" id="category">
-        <hr />
-        <input type="submit" value="Valider">
-      </form>
-    </div>`;
-  
-  modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
-  modal.querySelector('.js-modal-back').addEventListener('click', closeModal);
-};
+// Modal switch
+// const switchModal = function () {
+//   console.log("clicked");
+//   document.querySelector(
+//     ".modal-wrapper"
+//   ).innerHTML = `<div class="modal-buttons-container">
+//           <button class="v">
+//             <i class="fa-solid fa-arrow-left"></i>
+//           </button>
+//           <button class="js-modal-close">
+//             <i class="fa-solid fa-xmark"></i>
+//           </button>
+//         </div>
+//         <h3>Ajout photo</h3>
+//       <div class="form add-photo-form">
+//         <form action="#" method="post">
+//           <label for="title">Titre</label>
+//           <input type="text" name="title" id="title" />
+//           <label for="category">Catégorie</label>
+//           <input type="category" name="category" id="category" />
+//           <hr />
+//           <input type="submit" value="Valider" />
+//         </form>
+//         </div>
+//         `;
+//   modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
+//   modal.querySelector(".js-modal-back").addEventListener("click", openModal);
+// };
 
-  const backButton = document.querySelector('.fa-arrow-left');
+// const backButton = document.querySelector(".fa-arrow-left");
 
-  const addPhotoButton = document.querySelector('.add-photo-button');
-  addPhotoButton.addEventListener('click', AddPhotoModal);
+// const addPhotoButton = document.querySelector(".add-photo-button");
+// console.log(addPhotoButton);
+// addPhotoButton.addEventListener("click", switchModal);

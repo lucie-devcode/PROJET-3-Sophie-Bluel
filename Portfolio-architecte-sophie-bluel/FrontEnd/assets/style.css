@@ -173,6 +173,18 @@ li:hover {
 	margin-bottom: 1em;
 }
 
+.gallery {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-column-gap: 20px;
+	grid-row-gap: 20px;
+}
+
+.gallery img {
+	width: 100%;
+}
+
 .categories {
 	min-width: 550px;
 	width: 50%;
@@ -204,15 +216,15 @@ li:hover {
 	color: white;
 }
 
-.gallery {
+.modal-gallery-items {
 	width: 100%;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 }
 
-.gallery img {
+.modal-gallery-items img {
 	width: 100%;
 }
 
@@ -362,7 +374,7 @@ footer nav ul {
 	box-shadow: 0 0 10px blue;
 }
 
-/* ---- MODALE : contenu ---- */
+/* ---- MODALE : boutons ---- */
 .close-button-container {
 	display: flex;
 	justify-content: flex-end;
@@ -373,12 +385,7 @@ footer nav ul {
 	justify-content: space-between;
 }
 
-.js-modal-close {
-	border: none;
-	background-color: white;
-	font-size: 18px;
-}
-
+.js-modal-close,
 .js-modal-back {
 	border: none;
 	background-color: white;
@@ -414,10 +421,16 @@ footer nav ul {
 	width: 250px;
 }
 
-/* ---- MODALE : galerie ---- */
+/* ---- MODALE : galerie et ajout photos ---- */
 
-.gallery-modal {
-     display: grid;
+.gallery-modal-view {
+	display: flex;
+	flex-direction: column;
+    align-items: center;
+}
+
+.gallery-modal-items {
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     gap: 10px;
     padding: 40px;
@@ -490,4 +503,25 @@ footer nav ul {
 @keyframes slideFromTop {
 	from { transform: translateY(-50px); }
 	to { transform: translateY(0); }
+}
+
+/* ---- MODALE : ajout photo et galerie alternés ---- */
+
+.add-modal {
+  display: none;
+}
+
+.modal-gallery-view,
+.add-modal {
+  width: 100%;
+}
+
+.modal.active .modal-gallery-view {
+  display: flex; /* visible si active */
+}
+
+.modal.active .add-modal {
+  display: flex; /* visible si active */
+  flex-direction: column;
+  align-items: center;
 }
