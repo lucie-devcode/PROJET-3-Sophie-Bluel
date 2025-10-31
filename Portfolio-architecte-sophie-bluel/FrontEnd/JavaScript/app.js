@@ -72,12 +72,16 @@ function setFilter(category) {
 function adminMode() {
     const token = localStorage.getItem("authToken");
 
-    if (token) {
-        const editBanner = document.createElement("div");
-        editBanner.className = "edit"; 
-        editBanner.innerHTML = `<p><a href="#modal1" class="js-modal"><i class="fa-regular fa-pen-to-square"></i> Mode édition</a></p>`;
+  if (token) {
+        // Affiche la bannière visuelle seulement
+        const editBanner = document.querySelector(".edit");
+        if (editBanner) editBanner.style.display = "block";
 
-        document.body.prepend(editBanner);
+        // Affiche le bouton Modifier à côté du titre
+        const adminBtn = document.querySelector(".admin-edit-btn");
+        if (adminBtn) adminBtn.style.display = "inline-flex";
+
+        // Cache les filtres
         document.querySelector(".categories").style.display = "none";
     }
 }
@@ -86,6 +90,8 @@ function adminMode() {
 const openModal = function (e) {
   e.preventDefault();
   modal = document.querySelector(e.currentTarget.getAttribute("href"));
+  if(!modal) return;
+  
   modal.style.display = null;
   modal.removeAttribute("aria-hidden");
   modal.setAttribute("aria-modal", "true");
@@ -94,11 +100,12 @@ const openModal = function (e) {
 
   focusables = Array.from(modal.querySelectorAll(focusableSelector));
   previouslyFocusedElement = document.querySelector(':focus');
-  focusables[0].focus();
+  if (focusables[0]) focusables[0].focus();
+
   modal.addEventListener('click', closeModal);
   modal.querySelectorAll('.js-modal-close').forEach(btn =>
-  btn.addEventListener('click', closeModal)
-);  modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
+    btn.addEventListener('click', closeModal));
+  modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
 };
 
 const closeModal = function (e) {
@@ -109,7 +116,9 @@ const closeModal = function (e) {
     modal.setAttribute("aria-hidden", 'true');
     modal.removeAttribute("aria-modal");
     modal.removeEventListener('click', closeModal);
-    modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);
+    modal.querySelectorAll('.js-modal-close').forEach(btn =>
+        btn.removeEventListener('click', closeModal)
+    );
     modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);
     modal = null;
 };
@@ -127,22 +136,6 @@ const focusInModal = function (e) {
     if (index < 0) index = focusables.length - 1;
     focusables[index].focus();
 };
-
-document.addEventListener("DOMContentLoaded", async () => {
-    await loadCategories();
-    await fetchProjets();
-    loadProjets("all"); // affiche tous les projets au départ
-    adminMode();
-
-    document.querySelectorAll(".js-modal").forEach(a => {
-        a.addEventListener("click", openModal);
-    });
-
-    window.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' || e.key === 'Esc') closeModal(e);
-        if (e.key === 'Tab' && modal !== null) focusInModal(e);
-    });
-});
 
 // --- GESTION DE LA GALERIE DANS LA MODALE ---
 async function loadModalGallery() {
@@ -220,6 +213,33 @@ async function deleteProject(id) {
     });
   });
 }
+document.addEventListener("DOMContentLoaded", async () => {
+
+    const gallery = document.querySelector(".gallery");
+    const categoriesContainer = document.querySelector(".categories");
+
+    if (!gallery || !categoriesContainer) {
+        console.log("App.js détecte que la page n'est pas index.html, pas de galerie ni de catégories.");
+        return; // STOP, on est sur login.html
+    }
+    await loadCategories();
+    await fetchProjets();
+    loadProjets("all");
+
+    adminMode();
+
+    // Clic sur le **nouveau bouton Modifier**
+    document.querySelectorAll(".js-modal").forEach(a => {
+        a.addEventListener("click", openModal);
+    });
+
+    // Clavier
+    window.addEventListener('keydown', e => {
+        if ((e.key === 'Escape' || e.key === 'Esc') && modal) closeModal(e);
+        if (e.key === 'Tab' && modal !== null) focusInModal(e);
+    });
+});
+
 
 // Modal switch
 // const switchModal = function () {

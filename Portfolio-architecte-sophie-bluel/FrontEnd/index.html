@@ -1,120 +1,142 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-	<meta charset="UTF-8">
-	<title>Sophie Bluel - Architecte d'intérieur</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
-	<meta name="description" content="">
-	<script src="https://kit.fontawesome.com/ff923325fc.js" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="./assets/style.css">
-	<script src="JavaScript/app.js" defer></script>
+  <meta charset="UTF-8">
+  <title>Sophie Bluel - Architecte d'intérieur</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+  <meta name="description" content="">
+  <!-- Font Awesome pour les icônes -->
+  <script src="https://kit.fontawesome.com/ff923325fc.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./assets/style.css">
+  <script src="JavaScript/app.js" defer></script>
 </head>
 
 <body>
-		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" style="display:none">
 
-  <div class="modal-wrapper js-modal-stop">
-
-    <!-- ********** MODAL GALERIE ********** -->
-    <div class="modal-gallery-view">
-      <div class="close-button-container">
-        <button class="js-modal-close">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-	  </div>
-
-      <h3>Galerie Photo</h3>
-      <!-- Images générées -->
-      <div class="modal-gallery-items"></div>
-      <hr />
-      <div class="modal-button-container">
-        <button class="add-photo-button">Ajouter une photo</button>
-      </div>
-    </div>
-
-    <!-- ********** MODAL AJOUT PHOTO ********** -->
-    <div class="modal-add">
-      <div class="modal-buttons-container">
-        <button class="js-modal-back">
-			<i class="fa-solid fa-arrow-left"></i>
-		</button>
-        <button class="js-modal-close">
-			<i class="fa-solid fa-xmark"></i>
-		</button>
-      </div>
-
-      <h3>Ajout photo</h3>
-	<div class="form add-photo-form">
-        <form action="#" method="post">
-          <label for="title">Titre</label>
-          <input type="text" name="title" id="title" />
-          <label for="category">Catégorie</label>
-          <input type="category" name="category" id="category" />
-          <hr />
-          <input type="submit" value="Valider" />
-        </form>
-    </div>
+  <!-- ---------------- MODE ADMIN ---------------- -->
+  <!-- Bannière mode admin (indication visuelle seulement) -->
+  <div class="edit">
+    <i class="fa-regular fa-pen-to-square"></i> Mode édition
   </div>
-</aside>
 
-	<!-- ---------------- HEADER ---------------- -->
-	<header>
-		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-		<nav>
-			<ul>
-				<li><a href="#portfolio">projets</a></li>
-				<li><a href="#contact">contact</a></li>
-				<li><a href="login.html">login</a></li>
-				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-			</ul>
-		</nav>
-	</header>
+  <!-- ---------------- HEADER ---------------- -->
+  <header>
+    <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+    <nav>
+      <ul>
+        <li><a href="#portfolio">Projets</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+      </ul>
+    </nav>
+  </header>
 
-	<!-- ---------------- MAIN ---------------- -->
-	<main>
-		<section id="introduction">
-			<figure>
-				<img src="./assets/images/sophie-bluel.png" alt="">
-			</figure>
-			<article>
-				<h2>Designer d'espace</h2>
-				<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
-				<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
-				<p>En cas de besoin, une équipe pluridisciplinaire peut être constituée : architecte DPLG, décorateur(trice)...</p>
-			</article>
-		</section>
+  <!-- ---------------- MAIN ---------------- -->
+  <main>
+    <!-- Section Introduction -->
+    <section id="introduction">
+      <figure>
+        <img src="./assets/images/sophie-bluel.png" alt="Sophie Bluel">
+      </figure>
+      <article>
+        <h2>Designer d'espace</h2>
+        <p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
+        <p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
+        <p>En cas de besoin, une équipe pluridisciplinaire peut être constituée : architecte DPLG, décorateur(trice)...</p>
+      </article>
+    </section>
 
-		<section id="portfolio">
-			<h2>Mes Projets</h2>
-			<div class="categories"></div>
-			<div class="gallery"></div>
-		</section>
+    <!-- Section Portfolio -->
+    <section id="portfolio">
+      <!-- Titre + bouton Modifier -->
+      <h2>
+        Mes Projets
+        <a href="#modal1" class="admin-edit-btn js-modal">
+          <i class="fa-regular fa-pen-to-square"></i> Modifier
+        </a>
+      </h2>
 
-		<div class="form">
-			<h2>Contact</h2>
-			<p>Vous avez un projet ? Discutons-en !</p>
-			<form action="#" method="post">
-				<label for="name">Nom</label>
-				<input type="text" name="name" id="name">
-				<label for="email">Email</label>
-				<input type="email" name="email" id="email">
-				<label for="message">Message</label>
-				<textarea name="message" id="message" cols="30" rows="10"></textarea>
-				<input type="submit" value="Envoyer">
-			</form>
-		</div>
-	</main>
+      <!-- Catégories -->
+      <div class="categories"></div>
 
-	<!-- ---------------- FOOTER ---------------- -->
-	<footer>
-		<nav>
-			<ul>
-				<li>Mentions Légales</li>
-			</ul>
-		</nav>
-	</footer>
+      <!-- Galerie -->
+      <div class="gallery"></div>
+    </section>
+
+    <!-- Section Contact -->
+    <div class="form" id="contact">
+      <h2>Contact</h2>
+      <p>Vous avez un projet ? Discutons-en !</p>
+      <form action="#" method="post">
+        <label for="name">Nom</label>
+        <input type="text" name="name" id="name">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email">
+        <label for="message">Message</label>
+        <textarea name="message" id="message" cols="30" rows="10"></textarea>
+        <input type="submit" value="Envoyer">
+      </form>
+    </div>
+  </main>
+
+  <!-- ---------------- MODALE ---------------- -->
+  <aside id="modal1" class="modal" aria-hidden="true" role="dialog" style="display:none">
+    <div class="modal-wrapper js-modal-stop">
+      
+      <!-- ********** MODAL GALERIE ********** -->
+      <div class="modal-gallery-view">
+        <div class="close-button-container">
+          <button class="js-modal-close">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <h3>Galerie Photo</h3>
+        <div class="modal-gallery-items"></div>
+        <hr />
+        <div class="modal-button-container">
+          <button class="add-photo-button">Ajouter une photo</button>
+        </div>
+      </div>
+
+      <!-- ********** MODAL AJOUT PHOTO ********** -->
+      <div class="modal-add">
+        <div class="modal-buttons-container">
+          <button class="js-modal-back">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <button class="js-modal-close">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <h3>Ajout photo</h3>
+        <div class="form add-photo-form">
+          <form action="#" method="post">
+            <label for="title">Titre</label>
+            <input type="text" name="title" id="title" />
+            <label for="category">Catégorie</label>
+            <input type="category" name="category" id="category" />
+            <hr />
+            <input type="submit" value="Valider" />
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- ---------------- FOOTER ---------------- -->
+  <footer>
+    <nav>
+      <ul>
+        <li>Mentions Légales</li>
+      </ul>
+    </nav>
+  </footer>
+
 </body>
 </html>
