@@ -70,21 +70,43 @@ function setFilter(category) {
 
 // ------------------- Mode admin -------------------
 function adminMode() {
-    const token = localStorage.getItem("authToken");
+     const token = localStorage.getItem("authToken");
 
-  if (token) {
-        // Affiche la bannière visuelle seulement
-        const editBanner = document.querySelector(".edit");
-        if (editBanner) editBanner.style.display = "block";
+    const editBanner = document.querySelector(".edit");
+    const adminBtns = document.querySelectorAll(".admin-edit-btn");
+    const categoriesContainer = document.querySelector(".categories");
 
-        // Affiche le bouton Modifier à côté du titre
-        const adminBtn = document.querySelector(".admin-edit-btn");
-        if (adminBtn) adminBtn.style.display = "inline-flex";
+    if (token) {
+        // Affiche la bannière mode admin
+        if (editBanner) editBanner.style.display = "flex";
 
-        // Cache les filtres
-        document.querySelector(".categories").style.display = "none";
+        // Affiche les boutons Modifier
+        adminBtns.forEach(btn => btn.style.display = "inline-flex");
+
+        // Cache les filtres (optionnel)
+        if (categoriesContainer) categoriesContainer.style.display = "none";
+
+        // Affiche logout, masque login
+        if (logoutBtn) logoutBtn.style.display = "inline-block";
+        if (loginLink) loginLink.style.display = "none";
+    } else {
+        // Masque tout ce qui est admin
+        if (editBanner) editBanner.style.display = "none";
+        adminBtns.forEach(btn => btn.style.display = "none");
+
+        // Montre les filtres
+        if (categoriesContainer) categoriesContainer.style.display = "flex";
+
+        // Affiche login, masque logout
+        if (logoutBtn) logoutBtn.style.display = "none";
+        if (loginLink) loginLink.style.display = "inline-block";
     }
 }
+
+// Appel à la fin du chargement pour mettre à jour le mode admin
+document.addEventListener("DOMContentLoaded", () => {
+    adminMode();
+});
 
 // ------------------- Modale -------------------
 function showAddPhoto() {
@@ -186,7 +208,7 @@ async function loadModalGallery() {
     return;
   }
   
-  modalGallery.innerHTML = ""; 
+  modalGallery.innerHTML = "";
 
    const projets = allProjets;
 
@@ -278,4 +300,42 @@ document.addEventListener("DOMContentLoaded", async () => {
         if ((e.key === 'Escape' || e.key === 'Esc') && modal) closeModal(e);
         if (e.key === 'Tab' && modal !== null) focusInModal(e);
     });
+});
+
+// Liens login/logout dans le header
+const loginLink = document.getElementById("login-link");
+const logoutBtn = document.getElementById("logout-link");
+
+
+// Vérifie si l'utilisateur est connecté
+if (localStorage.getItem("authToken")) {
+    if (logoutBtn) logoutBtn.style.display = "inline-block";
+    if (loginLink) loginLink.style.display = "none";
+} else {
+    if (logoutBtn) logoutBtn.style.display = "none";
+    if (loginLink) loginLink.style.display = "inline-block";
+}
+
+// Gestion du clic sur logout
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("authToken"); // supprime le token
+        // Recharge la page pour revenir en mode non connecté
+        window.location.reload();
+    });
+}
+
+const photoInput = document.getElementById("photo-input");
+const previewImage = document.getElementById("image-preview");
+const uploadPlaceholder = document.getElementById("upload-placeholder");
+
+// Afficher l'image sélectionnée
+photoInput.addEventListener("change", () => {
+  const file = photoInput.files[0];
+  if (!file) return;
+
+  const url = URL.createObjectURL(file);
+  previewImage.src = url;
+  previewImage.style.display = "block";          // afficher l'image
+  uploadPlaceholder.style.display = "none";      // cacher le placeholder
 });

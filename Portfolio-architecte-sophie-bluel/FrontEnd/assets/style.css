@@ -350,7 +350,6 @@ footer nav ul {
   padding: 0;
   line-height: normal;
   box-sizing: border-box;
-  line-height: 50px;
 }
 
 
@@ -554,3 +553,60 @@ footer nav ul {
 .modal-add {
 display: none;
 }
+
+.image-preview-container {
+  width: 100%;
+  height: 200px;
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#upload-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.upload-frame {
+  width: 420px;
+  height: 100%;
+  background-color: #E8F1F6; /* bleu clair */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.upload-frame i {
+	width: 76px;
+  font-size: 100px;
+  color: #cbd6dc;
+  margin-bottom: 10px;
+}
+
+.upload-frame span {
+	color: #306685;
+	width: 200px;
+	padding: 15px;
+	background-color: #CBD6DC;
+	border-radius: 20px;
+	margin-bottom: 10px;
+}
+
+.upload-frame p {
+	font-size: 10px;
+	margin: 0;
+	
+}
+
+#photo-input {
+  display: none; /* caché mais déclenché par le label */
+}
+

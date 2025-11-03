@@ -18,7 +18,7 @@
 
   <!-- ---------------- MODE ADMIN ---------------- -->
   <!-- Bannière mode admin (indication visuelle seulement) -->
-  <div class="edit">
+  <div class="edit" style="display:none;">
     <i class="fa-regular fa-pen-to-square"></i> Mode édition
   </div>
 
@@ -29,7 +29,8 @@
       <ul>
         <li><a href="#portfolio">Projets</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a href="login.html">Login</a></li>
+        <li><a id="login-link" href="login.html">login</a></li>
+        <li><a id="logout-link" href="#" style="display:none;">logout</a></li>
         <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
       </ul>
     </nav>
@@ -114,10 +115,27 @@
         </div>
 
         <h3>Ajout photo</h3>
+        <div class="image-preview-container">
+  <!-- Cadre bleu avec icône + texte avant sélection -->
+          <label id="upload-placeholder" for="photo-input">
+            <div class="upload-frame">
+              <i class="fa-regular fa-image"></i>
+              <span>+ Ajouter photo</span>
+              <p>jpg,npg : 4mo max</p>
+            </div>
+            <input type="file" id="photo-input" accept="image/*" />
+          </label>
+
+  <!-- Image preview (cachée au début) -->
+          <img id="image-preview" style="display:none; width: 100%; height: 100%; object-fit: cover; border-radius: 10px;" />
+        </div>
+
+
         <div class="form add-photo-form">
-          <form action="#" method="post">
+          <form action="#" method="post" enctype="multipart/form-data">
             <label for="title">Titre</label>
             <input type="text" name="title" id="title" />
+
             <label for="category">Catégorie</label>
             <input type="category" name="category" id="category" />
             <hr />
