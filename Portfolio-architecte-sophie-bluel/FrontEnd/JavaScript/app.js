@@ -65,7 +65,16 @@ function setFilter(category) {
     div.textContent = category.name;
     div.className = "btn-category";
     div.addEventListener("click", () => loadProjets(category.id)); // filtrage en mémoire
-    document.querySelector(".categories").append(div);
+  document.querySelector(".categories").append(div);
+  
+  // Ajout de la catégorie dans le <select> de la modale
+    const select = document.getElementById("category");
+    if (select) {
+        const option = document.createElement("option");
+        option.value = category.id;
+        option.textContent = category.name;
+        select.append(option); 
+    }
 }
 
 // ------------------- Mode admin -------------------
