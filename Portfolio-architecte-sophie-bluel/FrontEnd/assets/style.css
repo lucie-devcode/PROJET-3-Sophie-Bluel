@@ -70,6 +70,7 @@ body {
 }
 
 main {
+	flex: 1;
 	height: 100vh;
 }
 
@@ -112,6 +113,14 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
+	gap: 30px;
+}
+
+nav li {
+	padding: 0;
+	font-size: 1.2em;
+	display: flex;
+  align-items: center;
 }
 
 nav a {
@@ -122,13 +131,18 @@ a {
 	color: black;
 }
 
-a:visited {
-	color: black;
+.auth-btn {
+  min-width: 70px;
+  text-align: center;
+  display: inline-block;
 }
 
-nav li {
-	padding: 0 10px;
-	font-size: 1.2em;
+nav img {
+  display: block;
+}
+
+a:visited {
+	color: black;
 }
 
 li:hover {
@@ -174,6 +188,8 @@ li:hover {
 }
 
 .admin-edit-btn {
+  text-decoration: none;
+  font-family: 'Work Sans';
   background: none;
   color: black;
   border: none;
@@ -300,13 +316,19 @@ input[type="submit"] {
    ========================================================= */
 footer {
 	background: white;
-	padding: 5px;
+	padding: 5px 20px; /* un peu d'espace intérieur */
 }
 
 footer nav ul {
 	display: flex;
-	justify-content: flex-end;
-	margin: 2em;
+	justify-content: flex-end; /* reste à droite */
+	margin: 0; /* supprime le margin qui décale */
+	padding: 0; /* supprime padding par défaut du ul */
+	list-style: none; /* retire les puces si besoin */
+}
+
+footer nav li {
+	padding: 0; /* supprime l'espacement si tu veux */
 }
 
 /* =========================================================

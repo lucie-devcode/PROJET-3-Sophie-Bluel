@@ -42,6 +42,49 @@ function loadProjets(filter) {
     projetsFiltres.forEach(setFigure);
 }
 
+function refreshProjects() {
+    loadProjets("all");
+    loadModalGallery();
+}
+
+async function loadModalGallery() {
+  const modalGallery = document.querySelector(".modal-gallery-items");
+  if (!modalGallery) return;
+
+  modalGallery.innerHTML = "";
+  const projets = allProjets;
+
+  projets.forEach((projet) => {
+    const figure = document.createElement("figure");
+    figure.classList.add("modal-figure");
+
+    figure.innerHTML = `
+          <div class="image-container">
+            <img src="${projet.imageUrl}" alt="${projet.title}">
+            <i class="fa-solid fa-trash-can overlay-icon delete-btn" data-id="${projet.id}"></i>
+          </div>
+          <figcaption>${projet.title}</figcaption>
+        `;
+
+    modalGallery.appendChild(figure);
+  });
+
+   // Ajout des écouteurs sur les icônes de suppression
+    modalGallery.querySelectorAll(".delete-btn").forEach((btn) => {
+        btn.addEventListener("click", async (e) => {
+            const id = e.currentTarget.dataset.id;
+            const confirmed = confirm("Supprimer ce projet ?");
+            if (!confirmed) return;
+
+            const success = await deleteProject(id); // utilise maintenant la fonction externe
+            if (success) {
+                allProjets = allProjets.filter(projet => projet.id !== Number(id));
+                refreshProjects();
+            }
+        });
+    });
+}
+
 // Crée chaque figure HTML pour un projet
 function setFigure(projet) {
     const figure = document.createElement("figure");
@@ -114,20 +157,29 @@ function adminMode() {
 }
 
 // ------------------- Modale -------------------
-function showAddPhoto() {
+function switchModalView(view) {
+    if (!modal) return;
+
     const galleryView = modal.querySelector(".modal-gallery-view");
     const addView = modal.querySelector(".modal-add");
+
     if (!galleryView || !addView) return;
-    galleryView.style.display = "none";
-    addView.style.display = "block";
+
+    if (view === "gallery") {
+        galleryView.style.display = "block";
+        addView.style.display = "none";
+    } else if (view === "add") {
+        galleryView.style.display = "none";
+        addView.style.display = "block";
+    }
+}
+
+function showAddPhoto() {
+    switchModalView("add");
 }
 
 function showGallery() {
-    const galleryView = modal.querySelector(".modal-gallery-view");
-    const addView = modal.querySelector(".modal-add");
-    if (!galleryView || !addView) return;
-    galleryView.style.display = "block";
-    addView.style.display = "none";
+    switchModalView("gallery");
 }
 
 const openModal = function (e) {
@@ -242,44 +294,7 @@ async function deleteProject(id) {
 }
 
 // ------------------- Chargement galerie modale -------------------
-async function loadModalGallery() {
-    const modalGallery = document.querySelector(".modal-gallery-items");
-    if (!modalGallery) return;
 
-    modalGallery.innerHTML = "";
-    const projets = allProjets;
-
-    projets.forEach((projet) => {
-        const figure = document.createElement("figure");
-        figure.classList.add("modal-figure");
-
-        figure.innerHTML = `
-          <div class="image-container">
-            <img src="${projet.imageUrl}" alt="${projet.title}">
-            <i class="fa-solid fa-trash-can overlay-icon delete-btn" data-id="${projet.id}"></i>
-          </div>
-          <figcaption>${projet.title}</figcaption>
-        `;
-
-        modalGallery.appendChild(figure);
-    });
-
-    // Ajout des écouteurs sur les icônes de suppression
-    modalGallery.querySelectorAll(".delete-btn").forEach((btn) => {
-        btn.addEventListener("click", async (e) => {
-            const id = e.currentTarget.dataset.id;
-            const confirmed = confirm("Supprimer ce projet ?");
-            if (!confirmed) return;
-
-            const success = await deleteProject(id); // utilise maintenant la fonction externe
-            if (success) {
-                allProjets = allProjets.filter(projet => projet.id !== Number(id));
-                loadModalGallery();
-                loadProjets("all");
-            }
-        });
-    });
-}
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -382,8 +397,7 @@ addPhotoForm.addEventListener("submit", async (e) => {
 
         // Met à jour la galerie principale et la galerie de la modale
         allProjets.push(newProject);
-        loadProjets("all");
-        loadModalGallery();
+        refreshProjects();
 
         // Réinitialise le formulaire et affiche à nouveau le placeholder
         addPhotoForm.reset();
