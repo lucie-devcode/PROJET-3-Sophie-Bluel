@@ -4,6 +4,21 @@ const focusableSelector = 'button, a, input, textarea';
 let focusables = [];
 let previouslyFocusedElement = null;
 
+// ------------------- Gestion login/logout -------------------
+function toggleLoginLogout() {
+    const token = localStorage.getItem("authToken");
+    const logoutBtn = document.getElementById("logout-link");
+    const loginLink = document.getElementById("login-link");
+
+    if (token) {
+        if (logoutBtn) logoutBtn.style.display = "inline-block";
+        if (loginLink) loginLink.style.display = "none";
+    } else {
+        if (logoutBtn) logoutBtn.style.display = "none";
+        if (loginLink) loginLink.style.display = "inline-block";
+    }
+}
+
 // ------------------- Chargement des projets -------------------
 async function fetchProjets() {
     try {
@@ -85,37 +100,18 @@ function adminMode() {
     const adminBtns = document.querySelectorAll(".admin-edit-btn");
     const categoriesContainer = document.querySelector(".categories");
 
-    if (token) {
-        // Affiche la bannière mode admin
+        if (token) {
         if (editBanner) editBanner.style.display = "flex";
-
-        // Affiche les boutons Modifier
         adminBtns.forEach(btn => btn.style.display = "inline-flex");
-
-        // Cache les filtres (optionnel)
         if (categoriesContainer) categoriesContainer.style.display = "none";
-
-        // Affiche logout, masque login
-        if (logoutBtn) logoutBtn.style.display = "inline-block";
-        if (loginLink) loginLink.style.display = "none";
     } else {
-        // Masque tout ce qui est admin
         if (editBanner) editBanner.style.display = "none";
         adminBtns.forEach(btn => btn.style.display = "none");
-
-        // Montre les filtres
         if (categoriesContainer) categoriesContainer.style.display = "flex";
-
-        // Affiche login, masque logout
-        if (logoutBtn) logoutBtn.style.display = "none";
-        if (loginLink) loginLink.style.display = "inline-block";
     }
-}
 
-// Appel à la fin du chargement pour mettre à jour le mode admin
-document.addEventListener("DOMContentLoaded", () => {
-    adminMode();
-});
+    toggleLoginLogout(); // mise à jour centralisée login/logout
+}
 
 // ------------------- Modale -------------------
 function showAddPhoto() {
@@ -191,7 +187,15 @@ const closeModal = function (e) {
         btn.removeEventListener('click', closeModal)
     );
     modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);
-    modal = null;
+  modal = null;
+  
+  // Réinitialise la preview d'image si une image avait été sélectionnée
+if (previewImage && uploadPlaceholder && photoInput) {
+    previewImage.src = "";               // vide l'URL
+    previewImage.style.display = "none"; // cache l'image
+    uploadPlaceholder.style.display = "flex"; // réaffiche le placeholder
+    photoInput.value = "";                // vide l'input file
+}
 };
 
 const stopPropagation = function (e) {
@@ -199,7 +203,9 @@ const stopPropagation = function (e) {
 };
 
 const focusInModal = function (e) {
-    e.preventDefault();
+  
+  e.preventDefault();
+  
     let index = focusables.findIndex(f => f === modal.querySelector(':focus'));
     if (e.shiftKey) index--;
     else index++;
@@ -208,82 +214,73 @@ const focusInModal = function (e) {
     focusables[index].focus();
 };
 
-// --- GESTION DE LA GALERIE DANS LA MODALE ---
-async function loadModalGallery() {
-  // Sélection à l'intérieur de la fonction, après que le DOM est prêt
-  const modalGallery = document.querySelector(".modal-gallery-items");
-  if (!modalGallery) {
-    console.error("modal-gallery-items introuvable !");
-    return;
-  }
-  
-  modalGallery.innerHTML = "";
-
-   const projets = allProjets;
-
-    projets.forEach((projet) => {
-      const figure = document.createElement("figure");
-      figure.classList.add("modal-figure");
-
-      // Image + icône poubelle en overlay
-      figure.innerHTML = `
-        <div class="image-container">
-          <img src="${projet.imageUrl}" alt="${projet.title}">
-          <i class="fa-solid fa-trash-can overlay-icon delete-btn" data-id="${projet.id}"></i>
-        </div>
-        <figcaption>${projet.title}</figcaption>
-      `;
-
-      modalGallery.appendChild(figure);
-    });
-  
-  // --- Fonction pour supprimer un projet sur le serveur ---
 async function deleteProject(id) {
-  const token = localStorage.getItem("authToken");
-  if (!token) {
-    alert("Vous devez être connecté pour supprimer un projet.");
-    return false;
-  }
-
-  try {
-    const res = await fetch(`http://localhost:5678/api/works/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    });
-
-    if (!res.ok) {
-      alert("Erreur lors de la suppression du projet.");
-      return false;
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+        alert("Vous devez être connecté pour supprimer un projet.");
+        return false;
     }
 
-    return true; // Suppression réussie
-  } catch (error) {
-    console.error("Erreur réseau :", error);
-    return false;
-  }
+    try {
+        const res = await fetch(`http://localhost:5678/api/works/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!res.ok) {
+            alert("Erreur lors de la suppression du projet.");
+            return false;
+        }
+
+        return true;
+    } catch (error) {
+        console.error("Erreur réseau :", error);
+        return false;
+    }
 }
 
-  // Ajout des écouteurs sur les icônes de suppression
-  modalGallery.querySelectorAll(".delete-btn").forEach((btn) => {
-    btn.addEventListener("click", async (e) => {
-      const id = e.currentTarget.dataset.id;
-      const confirmed = confirm("Supprimer ce projet ?");
-      if (!confirmed) return;
+// ------------------- Chargement galerie modale -------------------
+async function loadModalGallery() {
+    const modalGallery = document.querySelector(".modal-gallery-items");
+    if (!modalGallery) return;
 
-      const success = await deleteProject(id);
-      if (success) {
-      // ② Supprime le projet du tableau local
-        allProjets = allProjets.filter(projet => projet.id !== Number(id));
+    modalGallery.innerHTML = "";
+    const projets = allProjets;
 
-        // Recharge la galerie dans la modale et la galerie principale
-        loadModalGallery();
-        loadProjets("all");
-      }
+    projets.forEach((projet) => {
+        const figure = document.createElement("figure");
+        figure.classList.add("modal-figure");
+
+        figure.innerHTML = `
+          <div class="image-container">
+            <img src="${projet.imageUrl}" alt="${projet.title}">
+            <i class="fa-solid fa-trash-can overlay-icon delete-btn" data-id="${projet.id}"></i>
+          </div>
+          <figcaption>${projet.title}</figcaption>
+        `;
+
+        modalGallery.appendChild(figure);
     });
-  });
+
+    // Ajout des écouteurs sur les icônes de suppression
+    modalGallery.querySelectorAll(".delete-btn").forEach((btn) => {
+        btn.addEventListener("click", async (e) => {
+            const id = e.currentTarget.dataset.id;
+            const confirmed = confirm("Supprimer ce projet ?");
+            if (!confirmed) return;
+
+            const success = await deleteProject(id); // utilise maintenant la fonction externe
+            if (success) {
+                allProjets = allProjets.filter(projet => projet.id !== Number(id));
+                loadModalGallery();
+                loadProjets("all");
+            }
+        });
+    });
 }
+
 document.addEventListener("DOMContentLoaded", async () => {
 
     const gallery = document.querySelector(".gallery");
@@ -347,4 +344,55 @@ photoInput.addEventListener("change", () => {
   previewImage.src = url;
   previewImage.style.display = "block";          // afficher l'image
   uploadPlaceholder.style.display = "none";      // cacher le placeholder
+});
+
+const addPhotoForm = document.querySelector(".add-photo-form form");
+const titleInput = document.getElementById("title");
+const categorySelect = document.getElementById("category");
+
+addPhotoForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  
+  const file = photoInput.files[0];
+    const title = titleInput.value;
+    const category = categorySelect.value;
+    const token = localStorage.getItem("authToken"); // juste pour l'Authorization
+
+    if (!file || !title || !category) {
+        alert("Veuillez remplir tous les champs et sélectionner une image.");
+        return;
+    }
+  const formData = new FormData();
+    formData.append("image", file);
+    formData.append("title", title);
+    formData.append("category", category);
+
+    try {
+        const res = await fetch("http://localhost:5678/api/works", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+            body: formData
+        });
+
+        if (!res.ok) throw new Error("Erreur lors de l'ajout de la photo.");
+
+        const newProject = await res.json();
+
+        // Met à jour la galerie principale et la galerie de la modale
+        allProjets.push(newProject);
+        loadProjets("all");
+        loadModalGallery();
+
+        // Réinitialise le formulaire et affiche à nouveau le placeholder
+        addPhotoForm.reset();
+        previewImage.style.display = "none";
+        uploadPlaceholder.style.display = "flex";
+
+        alert("Photo ajoutée avec succès !");
+    } catch (error) {
+        console.error(error);
+        alert("Impossible d'ajouter la photo.");
+    }
 });

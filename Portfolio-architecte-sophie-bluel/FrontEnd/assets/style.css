@@ -556,13 +556,17 @@ display: none;
 }
 
 .image-preview-container {
-  width: 100%;
+  width: 420px;
   height: 200px;
+  margin: 20px auto;  /* centre tout le cadre horizontalement */
   position: relative;
 
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+    overflow: hidden;
+	background-color: #E8F1F6;
 }
 
 #upload-placeholder {
@@ -572,6 +576,7 @@ display: none;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  position: absolute;
 }
 
 .upload-frame {
@@ -583,6 +588,15 @@ display: none;
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+#image-preview {
+    max-width: 33%;
+    max-height: 100%;
+    object-fit: contain; /* garde les proportions */
+    display: none;
+	position: absolute;    /* pour être au-dessus du placeholder */
+    margin: 10px auto; /* centre l'image */
 }
 
 .upload-frame i {
@@ -610,4 +624,6 @@ display: none;
 #photo-input {
   display: none; /* caché mais déclenché par le label */
 }
+
+
 
