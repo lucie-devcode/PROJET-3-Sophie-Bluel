@@ -4,131 +4,214 @@
    Version : 2.0 | 20110126
    ========================================================= */
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 
 /* HTML5 display-role reset pour anciens navigateurs */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-	display: block;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
 }
 
 body {
-	line-height: 1;
-	background-color: #FFFEF8;
+  line-height: 1;
+  background-color: #fffef8;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-ol, ul {
-	list-style: none;
+ol,
+ul {
+  list-style: none;
 }
 
-blockquote, q {
-	quotes: none;
+blockquote,
+q {
+  quotes: none;
 }
 
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
 }
 
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 /* =========================================================
    STYLES GÉNÉRAUX
    ========================================================= */
 body {
-	max-width: 1140px;
-	margin: auto;
-	font-family: 'Work Sans';
-	font-size: 14px;
-	margin-top: 70px;
+  max-width: 1140px;
+  margin: auto;
+  font-family: "Work Sans";
+  font-size: 14px;
+  margin-top: 20px;
 }
 
 main {
-	flex: 1;
-	height: 100vh;
+  flex: 1;
 }
 
 section {
-	margin: 50px 0;
+  margin: 50px 0;
 }
 
 /* =========================================================
    HEADER & NAVIGATION
    ========================================================= */
 header {
-	display: flex;
-	justify-content: space-between;
-	margin: 50px 0;
+  display: flex;
+  justify-content: space-between;
+  margin: 50px 0;
 }
 
 h1 {
-	display: flex;
-	flex-direction: column;
-	font-family: 'Syne';
-	font-size: 22px;
-	font-weight: 800;
-	color: #B1663C;
+  display: flex;
+  flex-direction: column;
+  font-family: "Syne";
+  font-size: 22px;
+  font-weight: 800;
+  color: #b1663c;
 }
 
 h1 > span {
-	font-family: 'Work Sans';
-	font-size: 10px;
-	letter-spacing: 0.1em;
+  font-family: "Work Sans";
+  font-size: 10px;
+  letter-spacing: 0.1em;
 }
 
 h2 {
-	font-family: 'Syne';
-	font-weight: 700;
-	font-size: 30px;
-	color: #1D6154;
+  font-family: "Syne";
+  font-weight: 700;
+  font-size: 30px;
+  color: #1d6154;
 }
 
 nav ul {
-	display: flex;
-	align-items: center;
-	list-style-type: none;
-	gap: 30px;
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  gap: 30px;
 }
 
 nav li {
-	padding: 0;
-	font-size: 1.2em;
-	display: flex;
+  padding: 0;
+  font-size: 1.2em;
+  display: flex;
   align-items: center;
 }
 
 nav a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 a {
-	color: black;
+  color: black;
 }
 
 .auth-btn {
@@ -142,54 +225,54 @@ nav img {
 }
 
 a:visited {
-	color: black;
+  color: black;
 }
 
 li:hover {
-	color: #B1663C;
+  color: #b1663c;
 }
 
 /* =========================================================
    SECTION INTRODUCTION
    ========================================================= */
 #introduction {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 #introduction figure {
-	flex: 1;
+  flex: 1;
 }
 
 #introduction img {
-	display: block;
-	margin: auto;
-	width: 80%;
+  display: block;
+  margin: auto;
+  width: 80%;
 }
 
 #introduction article {
-	flex: 1;
+  flex: 1;
 }
 
 #introduction h2 {
-	margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 #introduction p {
-	margin-bottom: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 /* =========================================================
    PORTFOLIO & GALERIE
    ========================================================= */
 #portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
+  text-align: center;
+  margin-bottom: 1em;
 }
 
 .admin-edit-btn {
   text-decoration: none;
-  font-family: 'Work Sans';
+  font-family: "Work Sans";
   background: none;
   color: black;
   border: none;
@@ -201,158 +284,159 @@ li:hover {
 }
 
 .gallery {
-	width: 100%;
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	grid-column-gap: 20px;
-	grid-row-gap: 20px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
 }
 
 .gallery img {
-	width: 100%;
+  width: 100%;
 }
 
 .categories {
-	min-width: 550px;
-	width: 50%;
-	display: flex;
-	justify-content: space-evenly;
-	margin: 35px auto;
+  min-width: 550px;
+  width: 50%;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 35px auto;
 }
 
 .btn-tous {
-	order: -1; /* placer avant les autres filtres */
+  order: -1; /* placer avant les autres filtres */
 }
 
 .categories > * {
-	padding: 10px 20px;
-	border: 1px solid #1D6154;
-	border-radius: 25px;
-	font-family: 'Syne';
-	color: #1D6154;
-	cursor: pointer;
+  padding: 10px 20px;
+  border: 1px solid #1d6154;
+  border-radius: 25px;
+  font-family: "Syne";
+  color: #1d6154;
+  cursor: pointer;
 }
 
 .categories > *:hover {
-	background-color: #1D6154;
-	color: white;
+  background-color: #1d6154;
+  color: white;
 }
 
 .categories div.active {
-	background-color: #1D6154;
-	color: white;
+  background-color: #1d6154;
+  color: white;
 }
 
 .modal-gallery-items {
-	width: 100%;
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-	grid-column-gap: 20px;
-	grid-row-gap: 20px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
 }
 
 .modal-gallery-items img {
-	width: 100%;
+  width: 100%;
 }
 
 /* =========================================================
    FORMULAIRES
    ========================================================= */
 .form {
-	width: 65%;
-	margin: auto;
+  width: 65%;
+  margin: auto;
 }
 
 .form > * {
-	text-align: center;
+  text-align: center;
 }
 
 .form h2 {
-	margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .form form {
-	text-align: left;
-	margin-top: 30px;
-	display: flex;
-	flex-direction: column;
+  text-align: left;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
 .form input,
 .form select {
-	height: 50px;
-	font-size: 1.em;
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  height: 50px;
+  font-size: 1em;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
 .form label {
-	margin: 2em 0 1em 0;
+  margin: 2em 0 1em 0;
 }
 
 .form textarea {
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
 input[type="submit"] {
-	cursor: pointer;
-	font-family: 'Syne';
-	font-weight: 700;
-	color: white;
-	background-color: #1D6154;
-	margin: 2em auto;
-	width: 180px;
-	text-align: center;
-	border-radius: 60px;
+  cursor: pointer;
+  font-family: "Syne";
+  font-weight: 700;
+  color: white;
+  background-color: #1d6154;
+  margin: 2em auto;
+  width: 180px;
+  text-align: center;
+  border-radius: 60px;
 }
 
 .add-photo-form {
-	width: 70%;
+  width: 70%;
 }
 
 /* =========================================================
    FOOTER
    ========================================================= */
 footer {
-	background: white;
-	padding: 5px 20px; /* un peu d'espace intérieur */
+  background: white;
+  padding: 5px 20px; /* un peu d'espace intérieur */
+  margin-top: auto;
 }
 
 footer nav ul {
-	display: flex;
-	justify-content: flex-end; /* reste à droite */
-	margin: 0; /* supprime le margin qui décale */
-	padding: 0; /* supprime padding par défaut du ul */
-	list-style: none; /* retire les puces si besoin */
+  display: flex;
+  justify-content: flex-end; /* reste à droite */
+  margin: 0; /* supprime le margin qui décale */
+  padding: 0; /* supprime padding par défaut du ul */
+  list-style: none; /* retire les puces */
 }
 
 footer nav li {
-	padding: 0; /* supprime l'espacement si tu veux */
+  padding: 0;
 }
 
 /* =========================================================
    MESSAGES D’ERREUR
    ========================================================= */
 .message-error {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	border-left: 4px solid red;
-	background-color: #fff;
-	color: red;
-	padding: 10px 15px;
-	margin-top: 10px;
-	font-size: 0.9rem;
-	border-radius: 4px;
-	width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-left: 4px solid red;
+  background-color: #fff;
+  color: red;
+  padding: 10px 15px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  width: fit-content;
 }
 
 /* =========================================================
    MODE ÉDITION (ADMIN)
    ========================================================= */
 .edit {
-  display: none;              /* affichée seulement en mode admin */
+  display: none; /* affichée seulement en mode admin */
   position: fixed;
   top: 0;
   left: 0;
@@ -360,7 +444,7 @@ footer nav li {
   height: 50px;
   background-color: black;
   color: white;
-  font-family: 'Work Sans', sans-serif;
+  font-family: "Work Sans", sans-serif;
   font-weight: bold;
   z-index: 1000;
 
@@ -375,133 +459,130 @@ footer nav li {
   box-sizing: border-box;
 }
 
-
-
 .edit a,
 .edit a:visited {
-	color: white;
+  color: white;
 }
 
 /* =========================================================
    MODALE (FENÊTRE POPUP)
    ========================================================= */
 .modal {
-	position: fixed;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.08);
-	animation: fadeIn .3s both;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.3s both;
 }
 
 .modal-wrapper {
-	overflow: auto;
-	width: 600px;
-	max-width: calc(100vw - 20px);
-	max-height: calc(100vw - 20px);
-	background-color: white;
-	animation: slideFromTop .3s both .1s;
-	padding: 20px;
-	border-radius: 10px;
+  overflow: auto;
+  width: 600px;
+  max-width: calc(100vw - 20px);
+  max-height: calc(100vw - 20px);
+  background-color: white;
+  animation: slideFromTop 0.3s both 0.1s;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .modal[aria-hidden="true"] {
-	animation-name: fadeOut;
+  animation-name: fadeOut;
 }
 
 .modal[aria-hidden="true"] .modal-wrapper {
-	animation-name: slideBottom;
+  animation-name: slideBottom;
 }
 
 .modal :focus {
-	box-shadow: 0 0 10px blue;
+  box-shadow: 0 0 10px blue;
 }
 
 /* ---- MODALE : boutons ---- */
 .close-button-container {
-	display: flex;
-	justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .modal-buttons-container {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .js-modal-close,
 .js-modal-back {
-	border: none;
-	background-color: white;
-	font-size: 18px;
+  border: none;
+  background-color: white;
+  font-size: 18px;
 }
 
 .modal-wrapper h3 {
-	font-size: 24px;
-	text-align: center;
-	display: block;
-	margin-bottom: 40px;
+  font-size: 24px;
+  text-align: center;
+  display: block;
+  margin-bottom: 40px;
 }
 
 .modal-wrapper hr {
-	margin-top: 30px;
-	width: 100%;
+  margin-top: 30px;
+  width: 100%;
 }
 
 .modal-button-container {
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .add-photo-button {
-	padding: 10px 20px;
-	margin-top: 10px;
-	border: 1px solid #1D6154;
-	border-radius: 25px;
-	font-family: 'Syne';
-	color: white;
-	cursor: pointer;
-	background-color: #1D6154;
-	width: 250px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: 1px solid #1d6154;
+  border-radius: 25px;
+  font-family: "Syne";
+  color: white;
+  cursor: pointer;
+  background-color: #1d6154;
+  width: 250px;
 }
 
 /* ---- MODALE : galerie et ajout photos ---- */
 
 .gallery-modal-view {
-	display: flex;
-	flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .gallery-modal-items {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    gap: 10px;
-    padding: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 40px;
 }
 
 .modal-figure {
-	position: relative;
+  position: relative;
 }
 
 .modal-figure img {
-	width: 85px;
-	height: 120px;
-
+  width: 85px;
+  height: 120px;
 }
 
 .delete-btn {
-	position: absolute;
-	top: 5px;
-	right: 5px;
-	background: rgba(255, 255, 255, 0.8);
-	border: none;
-	cursor: pointer;
-	border-radius: 50%;
-	padding: 5px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 5px;
 }
 .image-container {
   position: relative;
@@ -526,30 +607,38 @@ footer nav li {
 
 /* ---- MODALE : bouton ajouter ---- */
 #add-photo-btn {
-	margin-top: 20px;
-	background-color: #B1663C;
-	color: white;
-	padding: 10px 20px;
-	border: none;
-	border-radius: 30px;
-	cursor: pointer;
-	font-family: 'Syne';
-	font-weight: 700;
+  margin-top: 20px;
+  background-color: #b1663c;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-family: "Syne";
+  font-weight: 700;
 }
 
 #add-photo-btn:hover {
-	background-color: #1D6154;
+  background-color: #1d6154;
 }
 
 /* ---- MODALE : animations ---- */
 @keyframes fadeIn {
-	from { opacity: 0; }
-	to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideFromTop {
-	from { transform: translateY(-50px); }
-	to { transform: translateY(0); }
+  from {
+    transform: translateY(-50px);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 /* ---- MODALE : ajout photo et galerie alternés ---- */
@@ -574,21 +663,21 @@ footer nav li {
 }
 
 .modal-add {
-display: none;
+  display: none;
 }
 
 .image-preview-container {
   width: 420px;
   height: 200px;
-  margin: 20px auto;  /* centre tout le cadre horizontalement */
+  margin: 20px auto; /* centre tout le cadre horizontalement */
   position: relative;
 
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-    overflow: hidden;
-	background-color: #E8F1F6;
+  overflow: hidden;
+  background-color: #e8f1f6;
 }
 
 #upload-placeholder {
@@ -604,7 +693,7 @@ display: none;
 .upload-frame {
   width: 420px;
   height: 100%;
-  background-color: #E8F1F6; /* bleu clair */
+  background-color: #e8f1f6; /* bleu clair */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -613,39 +702,35 @@ display: none;
 }
 
 #image-preview {
-    max-width: 33%;
-    max-height: 100%;
-    object-fit: contain; /* garde les proportions */
-    display: none;
-	position: absolute;    /* pour être au-dessus du placeholder */
-    margin: 10px auto; /* centre l'image */
+  max-width: 33%;
+  max-height: 100%;
+  object-fit: contain; /* garde les proportions */
+  display: none;
+  position: absolute; /* pour être au-dessus du placeholder */
+  margin: 10px auto; /* centre l'image */
 }
 
 .upload-frame i {
-	width: 76px;
+  width: 76px;
   font-size: 100px;
   color: #cbd6dc;
   margin-bottom: 10px;
 }
 
 .upload-frame span {
-	color: #306685;
-	width: 200px;
-	padding: 15px;
-	background-color: #CBD6DC;
-	border-radius: 20px;
-	margin-bottom: 10px;
+  color: #306685;
+  width: 200px;
+  padding: 15px;
+  background-color: #cbd6dc;
+  border-radius: 20px;
+  margin-bottom: 10px;
 }
 
 .upload-frame p {
-	font-size: 10px;
-	margin: 0;
-	
+  font-size: 10px;
+  margin: 0;
 }
 
 #photo-input {
   display: none; /* caché mais déclenché par le label */
 }
-
-
-
